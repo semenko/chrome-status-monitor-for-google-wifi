@@ -20,24 +20,26 @@ var routerStatus;
 
 // Parse the router results & alert the user if requested
 function checkState() {
-  var notification = new Notification('Google Wifi Status Change', { body: 'Offline'});
+  // var notification = new Notification('Google Wifi Status Change', { body: 'Offline'});
 }
 
 // Intermittently poll the router
 function pollRouter() {
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
+  var xhr = new XMLHttpRequest();
+  xhr.timeout = 5000; // OnHub is slow...
+  xhr.onreadystatechange = function() {
     if (this.readyState == 4) {
       if (this.status == 200) {
         routerStatus = JSON.parse(this.responseText);
+        console.log('status updated:', routerStatus);
         checkState();
       } else {
         console.warn(this.statusText);
       }
     }
   };
-  xmlhttp.open("GET", "http://testwifi.here/api/v1/status", true);
-  xmlhttp.send();
+  xhr.open("GET", "http://testwifi.here/api/v1/status", true);
+  xhr.send();
 }
 
 // Called on first run/extension update

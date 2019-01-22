@@ -24,5 +24,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     setIDsByObject(routerStatus);
 
+    // Via https://stackoverflow.com/questions/36098913/convert-seconds-to-days-hours-minutes-and-seconds
+    var seconds = parseInt(document.getElementById('uptime').innerHTML, 10);
+
+    if (!isNaN(seconds)) {
+      var days = Math.floor(seconds / (3600*24));
+      seconds  -= days*3600*24;
+      var hrs   = Math.floor(seconds / 3600);
+      seconds  -= hrs*3600;
+      var mnts = Math.floor(seconds / 60);
+      seconds  -= mnts*60;
+      document.getElementById('uptimeString').innerHTML = days+"d "+hrs+":"+mnts+"."+seconds;
+    }
+
   });
 });
