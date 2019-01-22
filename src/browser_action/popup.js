@@ -1,16 +1,28 @@
-console.log('0');
 document.addEventListener('DOMContentLoaded', function () {
-console.log('1');
   chrome.runtime.getBackgroundPage(function (bg) {
-    console.log('2');
-    var onHubStatus = bg.onHubStatus;
-    console.log(onHubStatus);
-    console.log('got it');
+    var routerStatus = bg.routerStatus;
+    console.log('1');
+    console.log(routerStatus);
 
-        document.getElementById("software").innerHTML = onHubStatus.software.softwareVersion;
-        document.getElementById("wanip").innerHTML = onHubStatus.wan.localIpAddress;
-        document.getElementById("gateway").innerHTML = onHubStatus.wan.gatewayIpAddress;
-        document.getElementById("dns").innerHTML = onHubStatus.wan.nameServers;
-        document.getElementById("online").innerHTML = onHubStatus.wan.online;
-        document.getElementById("uptime").innerHTML = onHubStatus.system.uptime;
-}); });
+    // Try to set each element of an identical ID to the status results.
+    // This is a silly/dangerous recursive function which could explode if the status JSON ever changes or has internal references.
+    // Ignores parent key names (child collisions will be silently ignored).
+    function setIDsByObject(obj) {
+      for (var i in obj) {
+        if (obj.hasOwnProperty(i) && typeof obj[i] == "object" && obj[i] !== null) {
+          setIDsByObject(obj[i]);
+        } else {
+          console.log(i);
+          try {
+            document.getElementById(i).innerHTML = obj[i];
+          } catch (err) {
+            console.log ('error on: ', i);
+          }
+        }
+      }
+    }
+
+    setIDsByObject(routerStatus);
+
+  });
+});

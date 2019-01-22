@@ -1,23 +1,112 @@
 <!doctype html>
-<style type="text/css">
+<head>
+	<style type="text/css">
 	#mainPopup {
-		padding: 10px;
 		height: 200px;
 		width: 400px;
 		font-family: Helvetica, Ubuntu, Arial, sans-serif;
+		color: #111;
+		font-family: sans-serif;
+		text-align: center;
+		font-size: 3vw;
 	}
 	h1 {
-		font-size: 2em;
+		margin: 2em 0;
+		font-size: 4vw;
+		font-weight: 300;
+	}
+	h2 {
+		margin: 2em 0 0;
+	}
+
+	hr {margin: 3vw auto; width: 70%}
+
+	table {
+		color: #333;
+		font-family: Helvetica, Arial, sans-serif;
+		width: 100%;
+		border-collapse: collapse; border-spacing: 0;
+	}
+
+	td {  border: 0 none; height: 30px; background: #FAFAFA; text-align: center; }
+
+	tr:nth-child(even) td { background: #EEE; }
+	tr:nth-child(odd) td { background: #FDFDFD; }
+
+	/* Add border-radius to specific cells! */
+	tr:first-child th:first-child {
+		border-radius: 5px 0 0 0;
+	}
+
+	tr:first-child th:last-child {
+		border-radius: 0 5px 0 0;
+	}
+
+	.footer {
+		font-size: 2.5vw;
+		margin: 6em 0 2em;
+		color: #777;
+	}
+
+	.footer a {
+		color: #777;
 	}
 </style>
 <script type="text/javascript" src="popup.js"></script>
+<body>
+	<div id="mainPopup">
+		<h1>Google Wifi / OnHub Status</h1>
 
-<div id="mainPopup">
-<h1>Hello extensionizr!</h1>
-<span id="software">Nothing yet.</span>
-<span id="wanip">Nothing yet.</span>
-<span id="gateway">Nothing yet.</span>
-<span id="dns">Nothing yet.</span>
-<span id="online">Nothing yet.</span>
-<p>To shut this popup down, edit the manifest file and remove the "default popup" key. To edit it, just edit ext/browser_action/browser_action.html. The CSS is there, too.</p>
-</div>
+		<table>
+			<tr>
+				<td>Online</td>
+				<td><span id="online">Unknown</span></td>
+			</tr>
+			<tr>
+				<td>Router Uptime</td>
+				<td><span id="uptime">Unknown</span></td>
+			</tr>
+			<th colspan="2"><hr></th>
+			<tr>
+				<td>WAN IP</td>
+				<td><span id="localIpAddress">Unknown</span> (<span id="ipMethod">Unknown</span>)</td>
+			</tr>
+			<tr>
+				<td>WAN Gateway</td>
+				<td><span id="gatewayIpAddress">0.0.0.0</span>/<span id="ipPrefixLength">21</span></td>
+			</tr>
+			<tr>
+				<td>Nameserver</td>
+				<td><span id="0">0.0.0.0</span></td>
+			</tr>
+			<th colspan="2"><hr></th>
+			<tr>
+				<td>Software Version</td>
+				<td><span id="softwareVersion">0.0.0.0</span> (<span id="updateChannel">unknown</span>)</td>
+			</tr>
+			<tr>
+				<td>Update Status</td>
+				<td><span id="updateStatus">unknown</span> (Progress: <span id="updateProgress">0.0</span>%)</td>
+			</tr>
+			<tr>
+				<td>Update Required</td>
+				<td><span id="updateRequired">unknown</span> (Version: <span id="updateNewVersion">0.0.0.0</span>)</td>
+			</tr>
+			<th colspan="2"><hr></th>
+			<tr>
+				<td>WAN Link Up</td>
+				<td><span id="ethernetLink">unknown</span></td>
+			</tr>
+			<tr>
+				<td>Lan0 Link Up</td>
+				<td><span id="lan0Link">unknown</span></td>
+			</tr>
+			<th colspan="2"><hr></th>
+		</table>
+
+		<p class="footer">
+			<a href="https://github.com/semenko/">GitHub</a> |
+			<a href="https://nick.semenkovich.com/">By Nick Semenkovich</a>
+		</p>
+	</div>
+</body></html>
