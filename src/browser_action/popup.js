@@ -47,8 +47,10 @@ document.addEventListener('DOMContentLoaded', function () {
   link.addEventListener('click', function() {
     console.log('Manual refresh requested');
       chrome.runtime.getBackgroundPage(function (bg) {
-        bg.pollRouter();
-        refreshHTML(bg.routerStatus);
+        refreshHTML(bg.routerStatus); // Refresh now, in case content already changed.
+        bg.pollRouter(); // Trigger router data refresh (async)
       });
   });
+
+  chrome.runtime.onMessage.addListener(refreshHTML);
 });

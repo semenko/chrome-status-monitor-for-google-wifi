@@ -19,6 +19,7 @@ var routerStatus;
 // We only trend a few things, but store the entire prior state in localStorage
 function updateState(routerStatus) {
   console.log('Router state update');
+  chrome.runtime.sendMessage({routerStatus});
   var lastState = JSON.parse(localStorage.routerStatus);
   localStorage.routerStatus = JSON.stringify(routerStatus);
 
