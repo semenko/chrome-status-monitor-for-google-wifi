@@ -1,9 +1,5 @@
 "use strict";
 
-function manualStatusCheck() {
-  chrome.runtime.getBackgroundPage(function (bg) { bg.pollRouter(); });
-};
-
 // Set each element of an identical ID to the status results.
 // This is a silly/dangerous recursive function which could explode if the status JSON ever changes or has internal references.
 // Ignores parent key names (child collisions will be silently ignored).
@@ -13,11 +9,11 @@ function setIDsByObject(obj) {
     if (obj.hasOwnProperty(i) && typeof obj[i] == "object" && obj[i] !== null) {
       setIDsByObject(obj[i]);
     } else {
-      console.log(i);
       try {
         document.getElementById(i).innerHTML = obj[i];
+        document.getElementById(i).setAttribute("data-value", obj[i]);
       } catch (err) {
-        console.log ('error on: ', i);
+        console.log (' Ignored: ', i);
       }
     }
   }
@@ -45,5 +41,14 @@ document.addEventListener('DOMContentLoaded', function () {
   chrome.runtime.getBackgroundPage(function (bg) {
     console.log(bg.routerStatus);
     refreshHTML(bg.routerStatus);
+  });
+
+  var link = document.getElementById('manualRefresh');
+  link.addEventListener('click', function() {
+    console.log('Manual refresh requested');
+      chrome.runtime.getBackgroundPage(function (bg) {
+        bg.pollRouter();
+        refreshHTML(bg.routerStatus);
+      });
   });
 });

@@ -51,6 +51,13 @@
 	.footer a {
 		color: #777;
 	}
+
+	[data-value="true"] {
+    color: green;
+}
+[data-value="false"] {
+    color: red;
+}
 </style>
 <script type="text/javascript" src="popup.js"></script>
 <body>
@@ -104,9 +111,11 @@
 			<th colspan="2"><hr></th>
 		</table>
 
+		<a href="#" id="manualRefresh">Refresh Now</a>
+
 		<p class="footer">
-			<a href="https://github.com/semenko/">GitHub</a> |
-			<a href="https://nick.semenkovich.com/">By Nick Semenkovich</a>
+			<a href="https://github.com/semenko/" target="_blank" rel="noopener">GitHub</a> |
+			<a href="https://nick.semenkovich.com/" target="_blank" rel="noopener">By Nick Semenkovich</a>
 		</p>
 	</div>
 </body></html>

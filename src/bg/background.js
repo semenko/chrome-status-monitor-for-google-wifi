@@ -15,10 +15,6 @@ License: MIT
 
 var routerStatus;
 
-function xor(x,y) {
-  return ( x || y ) && !( x && y );
-}
-
 // Parse the router status & alert the user if requested
 // We only trend a few things, but store the entire prior state in localStorage
 function updateState(routerStatus) {
@@ -28,29 +24,50 @@ function updateState(routerStatus) {
 
   if (typeof lastState !== 'undefined') {
     // Network state change
-    if (xor(lastState.wan.online, routerStatus.wan.online)) {
+    if (lastState.wan.online != routerStatus.wan.online) {
       var n = new Notification('Google Wifi/OnHub Status Change', {
         body: `Network state changed: Online status is now ${routerStatus.wan.online}`
       });
     };
 
     // WAN IP Change
-    if (xor(lastState.wan.gatewayIpAddress, routerStatus.wan.gatewayIpAddress)) {
+    if (lastState.wan.gatewayIpAddress != routerStatus.wan.gatewayIpAddress) {
       var n = new Notification('Google Wifi/OnHub Status Change', {
         body: `WAN IP changed: IP is now ${routerStatus.wan.gatewayIpAddress} (from ${lastState.wan.gatewayIpAddress})`
       });
     };
 
+    // Nameservers changed
+    if (lastState.wan.nameServers[0] != routerStatus.wan.nameServers[0]) {
+      var n = new Notification('Google Wifi/OnHub Status Change', {
+        body: `Primary nameserver changed: Now ${routerStatus.wan.nameServers[0]} (was ${lastState.wan.nameServers[0]})`
+      });
+    };
+
+    // Rebooted
+    if (routerStatus.system.uptime < lastState.system.uptime) {
+      var n = new Notification('Google Wifi/OnHub Status Change', {
+        body: `Router likely rebooted: Uptime is now ${routerStatus.system.uptime} (from ${lastState.system.uptime})`
+      });
+    };
+
     // Software update available
-    // ????
-    if (xor(lastState.system.updateNewVersion, routerStatus.system.updateNewVersion)) {
+    // TODO: Figure out how updates actually appear.
+    if (lastState.system.updateNewVersion != routerStatus.system.updateNewVersion) {
       var n = new Notification('Google Wifi/OnHub Status Change', {
         body: `New firmware available: ${routerStatus.system.updateNewVersion} (current ${routerStatus.system.softwareVersion})`
       });
     };
 
+    // Software version changed
+    if (lastState.system.softwareVersion != routerStatus.system.softwareVersion) {
+      var n = new Notification('Google Wifi/OnHub Status Change', {
+        body: `Firmware version changed: ${routerStatus.system.softwareVersion} (was ${lastState.system.softwareVersion})`
+      });
+    };
+
     // Link state change
-    if (xor(lastState.system.lan0Link, routerStatus.system.lan0Link)) {
+    if (lastState.system.lan0Link != routerStatus.system.lan0Link) {
       var n = new Notification('Google Wifi/OnHub Status Change', {
         body: `Link state change: lan0Link up is now ${routerStatus.system.lan0Link}`
       });
@@ -74,6 +91,7 @@ function pollRouter() {
       }
     }
   };
+  console.log('Background: Polling router.');
   xhr.open("GET", statusURL, true);
   xhr.send();
 }
