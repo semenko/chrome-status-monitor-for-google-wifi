@@ -29,18 +29,18 @@ this.manifest = {
         },
         {
             "tab": i18n.get("information"),
-            "group": i18n.get("logout"),
+            "group": i18n.get("notifications"),
             "name": "myCheckbox",
             "type": "checkbox",
             "label": i18n.get("enable")
         },
         {
             "tab": i18n.get("information"),
-            "group": i18n.get("logout"),
+            "group": i18n.get("notifications"),
             "name": "myButton",
             "type": "button",
             "label": i18n.get("disconnect"),
-            "text": i18n.get("logout")
+            "text": i18n.get("notifications")
         },
         {
             "tab": "Details",
