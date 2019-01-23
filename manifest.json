@@ -1,9 +1,9 @@
 {
   "name": "Status Monitor for Google Wifi & OnHub",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "manifest_version": 2,
-  "description": "Monitor your Google Onhub / Wifi router status.",
-  "homepage_url": "https://github.com/semenko/",
+  "description": "Monitor your Google Onhub / Wifi router status. By Nick Semenkovich <semenko@alum.mit.edu>",
+  "homepage_url": "https://github.com/semenko/chrome-status-monitor-for-google-wifi",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
@@ -17,7 +17,7 @@
   "options_page": "src/options_custom/index.html",
   "browser_action": {
     "default_icon": "icons/icon19.png",
-    "default_title": "Monitoring the status of your Google Wifi or OnHub router.",
+    "default_title": "Connecting to router...",
     "default_popup": "src/browser_action/browser_action.html"
   },
   "permissions": [
