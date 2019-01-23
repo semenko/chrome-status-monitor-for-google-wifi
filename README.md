@@ -3,7 +3,9 @@ chrome-status-monitor-for-google-wifi
 
 A Chrome Extension to monitor Google Wifi (or OnHub) status, checking for connectivity, uptime, changes in WAN IP, and more.
 
-This  polls the status API (generally http://testwifi.here/api/v1/status) every minute, and watches for changes.
+This polls the status API (generally http://testwifi.here/api/v1/status) every minute, and watches for changes.
+
+![Wifi Status Screesnhot](screenshots/screenshot-1.png?raw=true "Wifi Status Screesnhot")
 
 ## Installation
 
