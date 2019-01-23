@@ -84,6 +84,7 @@ function pollRouter() {
   xhr.onreadystatechange = function() {
     if (this.readyState == 4) {
       if (this.status == 200) {
+        chrome.browserAction.setTitle({title: `Connected to Google Wifi/OnHub: ${statusURL}`});
         routerStatus = JSON.parse(this.responseText)
         updateState(routerStatus);
       } else {
