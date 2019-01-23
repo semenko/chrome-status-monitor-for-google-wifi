@@ -20,10 +20,10 @@ var routerStatus;
 function updateState(routerStatus) {
   console.log('Router state update');
   chrome.runtime.sendMessage({routerStatus});
-  var lastState = JSON.parse(localStorage.routerStatus);
+  var lastState = JSON.parse(localStorage.routerStatus || null);
   localStorage.routerStatus = JSON.stringify(routerStatus);
 
-  if (typeof lastState !== 'undefined') {
+  if (lastState !== null) {
     // Network state change
     if (lastState.wan.online != routerStatus.wan.online) {
       var n = new Notification('Google Wifi/OnHub Status Change', {
@@ -84,7 +84,7 @@ function pollRouter() {
   xhr.onreadystatechange = function() {
     if (this.readyState == 4) {
       if (this.status == 200) {
-        chrome.browserAction.setTitle({title: `Connected to Google Wifi/OnHub: ${statusURL}`});
+        chrome.browserAction.setTitle({title: `Last updated at ${new Date().toLocaleTimeString()}`});
         routerStatus = JSON.parse(this.responseText)
         updateState(routerStatus);
       } else {
