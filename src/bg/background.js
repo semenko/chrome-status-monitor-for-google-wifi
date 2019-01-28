@@ -20,14 +20,19 @@ var routerStatus;
 function updateState(routerStatus) {
   console.log('Router state update');
   chrome.runtime.sendMessage({routerStatus});
+
+  // Were we just connected to a router? (was the XHR successful?)
+  var routerFound = localStorage.routerFound || null;
+
+  // The entire JSON object from the router's status API
   var lastState = JSON.parse(localStorage.routerStatus || null);
   localStorage.routerStatus = JSON.stringify(routerStatus);
 
   if (lastState !== null) {
     // Network state change
-    if (lastState.wan.online != routerStatus.wan.online) {
+    if (!routerFound || (lastState.wan.online != routerStatus.wan.online)) {
       var n = new Notification('Google Wifi/OnHub Status Change', {
-        body: `Network state changed: Online status is now ${routerStatus.wan.online}`
+        body: `Network state changed: Router connected is ${routerFound} and online status is now ${routerStatus.wan.online}`
       });
     };
 
@@ -84,10 +89,12 @@ function pollRouter() {
   xhr.onreadystatechange = function() {
     if (this.readyState == 4) {
       if (this.status == 200) {
+        localStorage.routerFound = true;
         chrome.browserAction.setTitle({title: `Last updated at ${new Date().toLocaleTimeString()}`});
         routerStatus = JSON.parse(this.responseText)
         updateState(routerStatus);
       } else {
+        localStorage.routerFound = false;
         chrome.browserAction.setTitle({title: `Errror: Unable to reach Google Wifi/OnHub at: ${statusURL}`});
         console.warn(this.statusText);
       }
