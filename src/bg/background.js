@@ -38,56 +38,70 @@ function updateState(routerStatus) {
   localStorage.routerStatus = JSON.stringify(routerStatus);
 
   if (lastState !== null) {
-    // Network state change
-    if (!routerFound || (lastState.wan.online != routerStatus.wan.online)) {
-      var n = new Notification('Google Wifi/OnHub Status Change', {
-        body: `Network state changed: Router connected is ${routerFound} and online status is now ${routerStatus.wan.online}`
-      });
+    chrome.storage.sync.get(DEFAULT_OPTIONS, function(userPref) {
+      // Network state change
+      if (userPref.alertNetwork) {
+        if (!routerFound || (lastState.wan.online != routerStatus.wan.online)) {
+        var n = new Notification('Google Wifi/OnHub Status Change', {
+          body: `Network state changed: Router connected is ${routerFound} and online status is now ${routerStatus.wan.online}`
+        });
+      };
     };
 
-    // WAN IP Change
-    if (lastState.wan.gatewayIpAddress != routerStatus.wan.gatewayIpAddress) {
-      var n = new Notification('Google Wifi/OnHub Status Change', {
-        body: `WAN IP changed: IP is now ${routerStatus.wan.gatewayIpAddress} (from ${lastState.wan.gatewayIpAddress})`
-      });
+      // WAN IP Change
+      if (userPref.alertWANIP) {
+        if (lastState.wan.gatewayIpAddress != routerStatus.wan.gatewayIpAddress) {
+        var n = new Notification('Google Wifi/OnHub Status Change', {
+          body: `WAN IP changed: IP is now ${routerStatus.wan.gatewayIpAddress} (from ${lastState.wan.gatewayIpAddress})`
+        });
+      };
     };
 
-    // Nameservers changed
-    if (lastState.wan.nameServers[0] != routerStatus.wan.nameServers[0]) {
-      var n = new Notification('Google Wifi/OnHub Status Change', {
-        body: `Primary nameserver changed: Now ${routerStatus.wan.nameServers[0]} (was ${lastState.wan.nameServers[0]})`
-      });
+      // Nameservers changed
+      if (userPref.alertNameserver) {
+        if (lastState.wan.nameServers[0] != routerStatus.wan.nameServers[0]) {
+        var n = new Notification('Google Wifi/OnHub Status Change', {
+          body: `Primary nameserver changed: Now ${routerStatus.wan.nameServers[0]} (was ${lastState.wan.nameServers[0]})`
+        });
+      };
     };
 
-    // Rebooted
-    if (routerStatus.system.uptime < lastState.system.uptime) {
-      var n = new Notification('Google Wifi/OnHub Status Change', {
-        body: `Router likely rebooted: Uptime is now ${routerStatus.system.uptime} (from ${lastState.system.uptime})`
-      });
+      // Rebooted
+      if (userPref.alertUptime) {
+        if (routerStatus.system.uptime < lastState.system.uptime) {
+        var n = new Notification('Google Wifi/OnHub Status Change', {
+          body: `Router likely rebooted: Uptime is now ${routerStatus.system.uptime} (from ${lastState.system.uptime})`
+        });
+      };
     };
 
-    // Software update available
-    // TODO: Figure out how updates actually appear.
-    if (lastState.system.updateNewVersion != routerStatus.system.updateNewVersion) {
-      var n = new Notification('Google Wifi/OnHub Status Change', {
-        body: `New firmware available: ${routerStatus.system.updateNewVersion} (current ${routerStatus.system.softwareVersion})`
-      });
-    };
+      if (userPref.alertFirmware) {
+        // Software update available
+        // TODO: Figure out how updates actually appear.
+        if (lastState.system.updateNewVersion != routerStatus.system.updateNewVersion) {
+          var n = new Notification('Google Wifi/OnHub Status Change', {
+            body: `New firmware available: ${routerStatus.system.updateNewVersion} (current ${routerStatus.system.softwareVersion})`
+          });
+        };
 
-    // Software version changed
-    if (lastState.system.softwareVersion != routerStatus.system.softwareVersion) {
-      var n = new Notification('Google Wifi/OnHub Status Change', {
-        body: `Firmware version changed: ${routerStatus.system.softwareVersion} (was ${lastState.system.softwareVersion})`
-      });
-    };
+        // Software version changed
+        if (lastState.system.softwareVersion != routerStatus.system.softwareVersion) {
+          var n = new Notification('Google Wifi/OnHub Status Change', {
+            body: `Firmware version changed: ${routerStatus.system.softwareVersion} (was ${lastState.system.softwareVersion})`
+          });
+        };
+      };
 
-    // Link state change
-    if (lastState.system.lan0Link != routerStatus.system.lan0Link) {
-      var n = new Notification('Google Wifi/OnHub Status Change', {
-        body: `Link state change: lan0Link up is now ${routerStatus.system.lan0Link}`
-      });
+      // Link state change
+      if (userPref.alertLink) {
+          if (lastState.system.lan0Link != routerStatus.system.lan0Link) {
+          var n = new Notification('Google Wifi/OnHub Status Change', {
+            body: `Link state change: lan0Link up is now ${routerStatus.system.lan0Link}`
+          });
+        };
+      };
     };
-  }
+  };
 }
 
 // Intermittently poll the router

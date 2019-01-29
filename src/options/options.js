@@ -26,7 +26,6 @@ window.onload = function() {
   chrome.runtime.getBackgroundPage(function (bg) {
     var DEFAULT_OPTIONS = bg.DEFAULT_OPTIONS;
     chrome.storage.sync.get(DEFAULT_OPTIONS, function(results) {
-      console.log(results.alertNetwork);
       alertNetwork.checked = results.alertNetwork;
       alertWANIP.checked = results.alertWANIP;
       alertNameserver.checked = results.alertNameserver;
