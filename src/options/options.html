@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    label {margin: 12px 0; display: block;}
+    span {-webkit-margin-start: 0.6em; -webkit-user-select: none;}
+  </style>
+</head>
+<body>
+  Send notifications on these events:
+  <label>
+    <input type="checkbox" id="alertNetwork">
+    <span>Network status change (online / offline)</span>
+  </label>
+  <label>
+    <input type="checkbox" id="alertWANIP">
+    <span>WAN IP Change</span>
+  </label>
+  <label>
+    <input type="checkbox" id="alertNameserver">
+    <span>Nameserver change (primary only)</span>
+  </label>
+  <label>
+    <input type="checkbox" id="alertUptime">
+    <span>Uptime regression (router rebooted)</span>
+  </label>
+  <label>
+    <input type="checkbox" id="alertFirmware">
+    <span>Firmware update (available or applied)</span>
+  </label>
+  <label>
+    <input type="checkbox" id="alertLink">
+    <span>Link state change (lan0 link only)</span>
+  </label>
+  <script src="options.js"></script>
+</body>
+</html>
