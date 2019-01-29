@@ -1,5 +1,5 @@
 {
-  "name": "Network Status Monitor for OnHub & Google Wifi",
+  "name": "Status Monitor for Google Wifi & OnHub",
   "version": "2018.01.28",
   "manifest_version": 2,
   "description": "Monitor the connectivity of your Google OnHub / Wifi router and report any WAN changes or network disconnects. By Nick Semenkovich <semenko@alum.mit.edu>",
@@ -12,7 +12,7 @@
   "default_locale": "en",
   "background": {
     "page": "src/bg/background.html",
-    "persistent": true
+    "persistent": false
   },
   "options_ui": {
     "page": "src/options/options.html",

@@ -42,38 +42,38 @@ function updateState(routerStatus) {
       // Network state change
       if (userPref.alertNetwork) {
         if (!routerFound || (lastState.wan.online != routerStatus.wan.online)) {
-        var n = new Notification('Google Wifi/OnHub Status Change', {
-          body: `Network state changed: Router connected is ${routerFound} and online status is now ${routerStatus.wan.online}`
-        });
+          var n = new Notification('Google Wifi/OnHub Status Change', {
+            body: `Network state changed: Router connected is ${routerFound} and online status is now ${routerStatus.wan.online}`
+          });
+        };
       };
-    };
 
       // WAN IP Change
       if (userPref.alertWANIP) {
         if (lastState.wan.gatewayIpAddress != routerStatus.wan.gatewayIpAddress) {
-        var n = new Notification('Google Wifi/OnHub Status Change', {
-          body: `WAN IP changed: IP is now ${routerStatus.wan.gatewayIpAddress} (from ${lastState.wan.gatewayIpAddress})`
-        });
+          var n = new Notification('Google Wifi/OnHub Status Change', {
+            body: `WAN IP changed: IP is now ${routerStatus.wan.gatewayIpAddress} (from ${lastState.wan.gatewayIpAddress})`
+          });
+        };
       };
-    };
 
       // Nameservers changed
       if (userPref.alertNameserver) {
         if (lastState.wan.nameServers[0] != routerStatus.wan.nameServers[0]) {
-        var n = new Notification('Google Wifi/OnHub Status Change', {
-          body: `Primary nameserver changed: Now ${routerStatus.wan.nameServers[0]} (was ${lastState.wan.nameServers[0]})`
-        });
+          var n = new Notification('Google Wifi/OnHub Status Change', {
+            body: `Primary nameserver changed: Now ${routerStatus.wan.nameServers[0]} (was ${lastState.wan.nameServers[0]})`
+          });
+        };
       };
-    };
 
       // Rebooted
       if (userPref.alertUptime) {
         if (routerStatus.system.uptime < lastState.system.uptime) {
-        var n = new Notification('Google Wifi/OnHub Status Change', {
-          body: `Router likely rebooted: Uptime is now ${routerStatus.system.uptime} (from ${lastState.system.uptime})`
-        });
+          var n = new Notification('Google Wifi/OnHub Status Change', {
+            body: `Router likely rebooted: Uptime is now ${routerStatus.system.uptime} (from ${lastState.system.uptime})`
+          });
+        };
       };
-    };
 
       if (userPref.alertFirmware) {
         // Software update available
@@ -94,13 +94,13 @@ function updateState(routerStatus) {
 
       // Link state change
       if (userPref.alertLink) {
-          if (lastState.system.lan0Link != routerStatus.system.lan0Link) {
+        if (lastState.system.lan0Link != routerStatus.system.lan0Link) {
           var n = new Notification('Google Wifi/OnHub Status Change', {
             body: `Link state change: lan0Link up is now ${routerStatus.system.lan0Link}`
           });
         };
       };
-    };
+    });
   };
 }
 
