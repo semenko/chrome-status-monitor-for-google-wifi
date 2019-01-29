@@ -1,4 +1,5 @@
 // Derived from https://github.com/beaufortfrancois/extensions-update-notifier-chrome-extension
+"use strict";
 
 var alertNetwork = document.querySelector('#alertNetwork');
 var alertWANIP = document.querySelector('#alertWANIP');
@@ -22,22 +23,17 @@ function saveOptions() {
 
 // Restores synced preferences.
 window.onload = function() {
-  var ourKeys = {
-    alertNetwork: true,
-    alertWANIP: true,
-    alertNameserver: true,
-    alertUptime: true,
-    alertFirmware: true,
-    alertLink: true
-  };
-  chrome.storage.sync.get(ourKeys, function(results) {
-    console.log(results.alertNetwork);
-    alertNetwork.checked = results.alertNetwork;
-    alertWANIP.checked = results.alertWANIP;
-    alertNameserver.checked = results.alertNameserver;
-    alertUptime.checked = results.alertUptime;
-    alertFirmware.checked = results.alertFirmware;
-    alertLink.checked = results.alertLink;
+  chrome.runtime.getBackgroundPage(function (bg) {
+    var DEFAULT_OPTIONS = bg.DEFAULT_OPTIONS;
+    chrome.storage.sync.get(DEFAULT_OPTIONS, function(results) {
+      console.log(results.alertNetwork);
+      alertNetwork.checked = results.alertNetwork;
+      alertWANIP.checked = results.alertWANIP;
+      alertNameserver.checked = results.alertNameserver;
+      alertUptime.checked = results.alertUptime;
+      alertFirmware.checked = results.alertFirmware;
+      alertLink.checked = results.alertLink;
+    });
   });
   alertNetwork.onchange = saveOptions;
   alertWANIP.onchange = saveOptions;

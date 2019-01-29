@@ -13,6 +13,15 @@ License: MIT
 
 "use strict";
 
+var DEFAULT_OPTIONS = {
+  alertNetwork: true,
+  alertWANIP: true,
+  alertNameserver: true,
+  alertUptime: true,
+  alertFirmware: true,
+  alertLink: true
+};
+
 var routerStatus;
 
 // Parse the router status & alert the user if requested
