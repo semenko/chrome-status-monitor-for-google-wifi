@@ -2,7 +2,7 @@
   "name": "Status Monitor for Google Wifi & OnHub",
   "version": "2018.01.28",
   "manifest_version": 2,
-  "description": "Monitor the connectivity of your Google OnHub / Wifi router and report any WAN changes or network disconnects. By Nick Semenkovich <semenko@alum.mit.edu>",
+  "description": "Monitor the connectivity of your Google OnHub / Wifi router & report any network changes. By Nick Semenkovich <semenko@alum.mit.edu>",
   "homepage_url": "https://github.com/semenko/chrome-status-monitor-for-google-wifi",
   "icons": {
     "16": "icons/antenna-16.png",
