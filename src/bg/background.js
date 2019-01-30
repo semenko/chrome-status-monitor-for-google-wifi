@@ -22,7 +22,7 @@ var DEFAULT_OPTIONS = {
   alertLink: true
 };
 
-var routerStatus;
+var routerStatus = JSON.parse(localStorage.routerStatus || null);
 
 // Parse the router status & alert the user if requested
 // We only trend a few things, but store the entire prior state in localStorage
